@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bdqn.gph.mapper.OrderMapper">
+    <select id="proListByOrderId" resultType="Product">
+         SELECT * FROM gph_order go,gph_order_detail god,gph_product gp WHERE god.productId = gp.id AND god.orderId = go.id AND god.orderId = #{orderId}
+    </select>
+
+    <select id="getOrderByUid" resultType="Order">
+        SELECT * FROM gph_order go,gph_user gu WHERE go.userId = gu.id AND go.userId = #{uid}
+    </select>
+</mapper>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bdqn.gph.mapper.UserMapper">
+    <sql id="userProperty">id,userName,loginName,userPassword,phone,sex,birthday,qq,userRole,jiFen,address,creationDate
+        ,createBy,modifyBy,modifyDate,email </sql>
+    <select id="selectAllProducts" resultType="Product">
+    select * from gph_product
+    </select>
+
+    <select id="selectUserByPhoneAndPwd" resultType="User">
+        select <include refid="userProperty"/> from gph_user where phone=#{loginmode}  and userPassword=#{userPassword}
+    </select>
+
+    <select id="selectUserByEmailAndPwd" resultType="User">
+        select <include refid="userProperty"/> from gph_user where email=#{loginmode}  and userPassword=#{userPassword}
+    </select>
+
+    <select id="selectUserByPhoneRegist" resultType="User">
+        select <include refid="userProperty"/> from gph_user where phone=#{registmode}
+    </select>
+
+    <select id="selectUserByEmailRegist" resultType="User">
+        select <include refid="userProperty"/> from gph_user where email=#{registmode}
+    </select>
+
+    <insert id="insertUserByPhone">
+        insert into gph_user(loginName,userPassword,phone,userRole,creationDate)
+        values (#{registmode},#{userPassword},#{registmode},3,NOW())
+    </insert>
+
+    <insert id="insertUserByEmail">
+        insert into gph_user(loginName,userPassword,userRole,creationDate,email)
+        values (#{registmode},#{userPassword},3,NOW(),#{registmode})
+    </insert>
+    <update id="modifyUserByInfo">
+        update gph_user set loginName=#{loginName},userName=#{userName},sex=#{sex} where id=#{id}
+</update>
+
+    <update id="modifyUserPassword">
+     update gph_user set userPassword=#{newPassword} where id=#{id} and userPassword = #{userPassword}
+    </update>
+
+    <select id="selectAllProductsByFavorites" resultType="Product">
+        select p.*,f.id fid from gph_favorites f,gph_product p where f.productId=p.id and f.userId=#{userId}
+    </select>
+
+    <delete id="delFavorites">
+        delete  from gph_favorites where id = #{id}
+    </delete>
+
+    <insert id="insertFavorites">
+        insert into gph_favorites(userId,productId,collectTime)
+        values (#{userId},#{productId},NOW())
+
+    </insert>
+
+
+
+</mapper>

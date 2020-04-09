@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bdqn.gph.mapper.ProductCategoryMapper">
+    <sql id="comment_list">
+        id,name,parentId,level1Type,categoryType,isDelete
+    </sql>
+    <select id="listCategory" resultType="ProductCategory">
+        select <include refid="comment_list"/> from gph_product_category where isDelete = 0
+    </select>
+
+    <select id="cateList1" resultType="ProductCategory">
+        SELECT gpc.id FROM gph_product_category gpc WHERE gpc.categoryType = 1 AND isDelete = 0
+    </select>
+
+    <select id="getProByPage" resultType="Product">
+        select * from gph_product where categoryLevel1Id = #{categoryLevel1Id} limit #{pageNo},#{pageSize}
+    </select>
+
+    <select id="getCount" resultType="int">
+        select count(1) from gph_product where categoryLevel1Id = #{categoryLevel1Id}
+    </select>
+
+    <select id="getProByPageAndThree" resultType="Product">
+        select * from gph_product where categoryLevel3Id = #{categoryLevel3Id} limit #{pageNo},#{pageSize}
+    </select>
+
+    <select id="getCountByThree" resultType="int">
+        select count(1) from gph_product where categoryLevel3Id = #{categoryLevel3Id}
+    </select>
+
+</mapper>

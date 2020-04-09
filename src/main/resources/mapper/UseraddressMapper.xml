@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bdqn.gph.mapper.UseraddressMapper">
+    <insert id="Addaddress" parameterType="Useraddress">
+        insert into gph_useraddress(userName,phone,area,address,beat,addressDetail,userId)
+         values(#{userName},#{phone},#{area},#{address},#{beat},#{addressDetail},#{userId})
+    </insert>
+
+    <select id="selectAll" resultType="Useraddress">
+        select * from gph_useraddress where userId=#{userId}
+    </select>
+
+    <update id="updateUserInfo"  parameterType="Useraddress">
+        update gph_useraddress set userName=#{userName},phone=#{phone},area=#{area},
+        address=#{address},beat=#{beat},addressDetail=#{addressDetail} where userId=#{userId}
+    </update>
+
+    <delete id="deleteUserAddress">
+        delete from gph_useraddress where id=#{id}
+    </delete>
+</mapper>

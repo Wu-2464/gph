@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Insert title here</title>
+<!--    <script src="<%=basePath %>/view/js/jquery-2.1.1.min.js"></script>-->
+<!--    <script src="<%=basePath %>/view/js/register.js?v=1.0.0"></script>-->
+    <script th:src="@{/js/jquery-1.12.4.js}"></script>
+    <script type="text/javascript">
+        function getBasePath(){
+            return '<%=basePath%>';
+        }
+    </script>
+</head>
+<body>
+<form action="reg">
+    <div>
+        账号: <input name="userId">
+    </div>
+    <div>
+        密码: <input name="password">
+    </div>
+    <div>
+        手机号: <input name="number">
+    </div>
+    <div>
+        验证码: <input name="verifyCode"><button type="button"   class="sendVerifyCode" >获取短信验证码</button>
+    </div>
+    <div><button type="button" class="sub-btn">提交</button></div>
+</form>
+<script type="text/javascript">
+    $(".sendVerifyCode").click(function () {
+        alert("nmsl");
+        var number = $("input[name='number']").val();
+        $.post("sendSms","number="+number,function (data) {
+            if(data==fail){
+                alert("ggg");
+            }else{
+                alert("lol");
+            }
+        },"JSON");
+    })
+
+    // function check(){
+    //     var number = $("input[name='number']").val();
+    //     alert("gg");
+    //     $.post("sendSms","number="+number,function (data) {
+    //         if(data==fail){
+    //             alert("ggg");
+    //         }else{
+    //             alert("lol");
+    //         }
+    //     },"JSON");
+    // }
+
+
+    // $(function(){
+    //     //发送验证码
+    //     $(".sendVerifyCode").on("click", function(){
+    //         var number = $("input[name=number]").val();
+    //         alert("nsml");
+    //         $.ajax({
+    //             url: "/sendSms",
+    //             async : true,
+    //             type: "post",
+    //             dataType: "json",
+    //             data: {"number":number},
+    //             success: function (data) {
+    //                 if(data == "fail"){
+    //                     alert("发送验证码失败");
+    //                     return ;
+    //                 }
+    //             }
+    //         });
+    //     })
+        //提交
+        $(".sub-btn").on("click", function(){
+            var data = {};
+            data.userId = $.trim($("input[name=userId]").val());
+            data.password = $.trim($("input[name=password]").val());
+            data.number = $.trim($("input[name=number]").val());
+            data.verifyCode = $.trim($("input[name=verifyCode]").val());
+
+            $.ajax({
+                url: getBasePath()+"/register.html",
+                async : true,
+                type: "post",
+                dataType: "json",
+                data: data,
+                success: function (data) {
+                    if(data == 'fail'){
+                        alert("注册失败");
+                        return ;
+                    }
+                    alert("注册成功");
+                }
+            });
+        })
+    });
+</script>
+</body>
+</html>

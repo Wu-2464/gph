@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="hmtop" th:fragment="copy">
+    <!--顶部导航条 -->
+    <div class="am-container header">
+        <ul class="message-l">
+            <div class="topMessage">
+                <div class="menu-hd">
+							<span th:if="${session.user}==null">
+								<a href="login" target="_top" class="h">亲，请登录</a>
+								<a href="regist" target="_top">免费注册</a>
+							</span>
+                    <span th:if="${session.user}!=null">
+								<span th:text="${session.user.loginName}"></span>,欢迎光临!
+								<a href="logoff">注销</a>
+
+							</span>
+                </div>
+            </div>
+        </ul>
+        <ul class="message-r">
+            <div class="topMessage home">
+                <div class="menu-hd"><a href="index" target="_top" class="h">商城首页</a></div>
+            </div>
+            <span th:if="${session.user}!=null">
+						<div class="topMessage my-shangcheng">
+							<div class="menu-hd MyShangcheng"><a href="userBack" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
+						</div>
+					</span>
+            <div class="topMessage mini-cart" th:if="${session.user}!=null">
+                <div class="menu-hd"><a id="mc-menu-hd" href="shopCart" target="_top"><i class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum" class="h"></strong></a></div>
+            </div>
+            <div class="topMessage favorite" th:if="${session.user}!=null">
+                <div class="menu-hd"><a th:href="@{favorites(userId=${session.user.id})}" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a>
+                </div>
+            </div>
+        </ul>
+    </div>
+
+    <!--悬浮搜索框-->
+
+    <div class="nav white">
+        <div class="logo"><img th:src="@{/static/images/glogo.png}" /></div>
+        <div class="logoBig">
+            <li><a th:href="@{index}"><img th:src="@{/images/glogo.png}"></a></li>
+        </div>
+
+        <div class="search-bar pr">
+            <a name="index_none_header_sysc" href="#"></a>
+            <form th:action="@{find}">
+                <!--							index_none_header_sysc						-->
+                <input id="searchInput" name="str" type="text" placeholder="搜索" autocomplete="off">
+                <input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="submit">
+            </form>
+        </div>
+    </div>
+
+    <div class="clear"></div>
+</div>
+</body>
+</html>

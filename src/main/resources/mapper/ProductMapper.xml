@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bdqn.gph.mapper.ProductMapper">
+    <select id="selectPic" resultType="ImgFile">
+        SELECT ifi.imgFile FROM gph_img_file ifi,gph_product pro WHERE ifi.productId = #{pId} AND ifi.productId = pro.id
+    </select>
+
+    <!--<select id="getListByCate1" resultType="Product">
+        select pro.* from gph_product pro,gph_product_category pc where pro.categoryLevel1Id = pc.id and pc.isDelete=0 and pc.categoryType = 1 and pro.categoryLevel1Id in
+            <foreach collection="list" item="item" open="(" separator="," close=")" >
+                #{item}
+            </foreach>
+        limit 0,5
+    </select>-->
+    <select id="getListBy1" resultType="Product">
+         SELECT * FROM gph_product gpro WHERE gpro.categoryLevel1Id = 1 ORDER BY gpro.id  LIMIT 0,6
+    </select>
+    <select id="getListBy2" resultType="Product">
+         SELECT * FROM gph_product gpro WHERE gpro.categoryLevel1Id = 2 ORDER BY gpro.id  LIMIT 0,6
+    </select>
+    <select id="getListBy3" resultType="Product">
+         SELECT * FROM gph_product gpro WHERE gpro.categoryLevel1Id = 3 ORDER BY gpro.id  LIMIT 0,6
+    </select>
+    <select id="getListBy4" resultType="Product">
+         SELECT * FROM gph_product gpro WHERE gpro.categoryLevel1Id = 4 ORDER BY gpro.id  LIMIT 0,6
+    </select>
+    <select id="getListBy5" resultType="Product">
+         SELECT * FROM gph_product gpro WHERE gpro.categoryLevel1Id = 5 ORDER BY gpro.id  LIMIT 0,6
+    </select>
+    <select id="getListBy6" resultType="Product">
+         SELECT * FROM gph_product gpro WHERE gpro.categoryLevel1Id = 6 ORDER BY gpro.id  LIMIT 0,6
+    </select>
+    <select id="getListBy7" resultType="Product">
+         SELECT * FROM gph_product gpro WHERE gpro.categoryLevel1Id = 7 ORDER BY gpro.id  LIMIT 0,6
+    </select>
+    <select id="getListBy8" resultType="Product">
+         SELECT * FROM gph_product gpro WHERE gpro.categoryLevel1Id = 8 ORDER BY gpro.id  LIMIT 0,6
+    </select>
+    <select id="getListBy9" resultType="Product">
+         SELECT * FROM gph_product gpro WHERE gpro.categoryLevel1Id = 9 ORDER BY gpro.id  LIMIT 0,6
+    </select>
+    <select id="listByPrice" resultType="Product">
+        select * from gph_product order by price limit 0,3
+    </select>
+
+    <select id="selectcategoryLevel1IdName" resultType="ProductCategory">
+            select * from gph_product_category where categoryType=1
+        </select>
+
+    <select id="selectcategoryLevel2IdName" resultType="ProductCategory">
+            select * from gph_product_category where categoryType=2
+        </select>
+
+    <select id="selectcategoryLevel3IdName" resultType="ProductCategory">
+            select * from gph_product_category where categoryType=3
+        </select>
+
+    <insert id="AddProduct" parameterType="Product">
+  insert into gph_product(productName,description,price,stock,status,
+            categoryLevel1Id,categoryLevel2Id,categoryLevel3Id,weight,num,delivery,
+            orderNumber,productModel,brandId) values (#{productName},
+            #{description},#{price},#{stock},#{status},#{categoryLevel1Id},
+            #{categoryLevel2Id},#{categoryLevel3Id},#{weight},#{num},#{delivery},#{orderNumber},
+            #{productModel},#{brandId})
+    </insert>
+
+    <select id="selectNewInfo" resultType="int">
+    SELECT id FROM gph_product p ORDER BY p.id DESC LIMIT 1
+    </select>
+
+    <insert id="AddImg" parameterType="ImgFile">
+        insert into gph_img_file(imgFile,productId) values (#{imgFile},#{productId})
+    </insert>
+
+    <select id="selectBrandName" resultType="Brand">
+        select * from gph_brand
+    </select>
+
+    <select id="selectNameByParentId" resultType="ProductCategory" parameterType="int">
+        select * from gph_product_category where parentId=#{parentId}
+    </select>
+
+    <select id="getProByName" resultType="Product">
+        select * from gph_product where productName like CONCAT('%',#{proName},'%') limit #{pageNo},#{pageSize}
+    </select>
+
+    <select id="getCountByName" resultType="int">
+        select count(1) from gph_product where productName like CONCAT('%',#{proName},'%')
+    </select>
+
+    <select id="selectAllByL3Id" resultType="Product">
+        select * from gph_product where categoryLevel3Id=1
+    </select>
+
+    <select id="getProById" resultType="Product">
+        select * from gph_product where id = #{proId}
+    </select>
+
+</mapper>
